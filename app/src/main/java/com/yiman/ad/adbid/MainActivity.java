@@ -229,7 +229,6 @@ public class MainActivity extends BaseActivity {
         appOpenAdListener = new AdbidListener() {
             @Override public void onAdLoad(@NonNull AdbidAdInfo adInfo) {
                 logToast("onAdLoadSuccess ecpm " + adInfo.getPrice());
-                appOpenAd.winNotice(12);
             }
 
             @Override
