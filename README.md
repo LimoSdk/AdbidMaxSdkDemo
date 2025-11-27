@@ -1,0 +1,2 @@
+# AdbidMaxSdkDemo
+领摩聚合sdk支持多平台联盟广告竞价，支持领摩ADX广告加载
