@@ -7,7 +7,7 @@ android {
     buildToolsVersion rootProject.ext.android.buildToolsVersion
     namespace = "com.yiman.ad.adbid"
     defaultConfig {
-        applicationId "com.adbid.max.sdk.demo"
+        applicationId "com.adbid.sdk.demo"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 1
@@ -72,7 +72,7 @@ dependencies {
 
 
     //领摩核心库 及 各平台适配器
-    implementation(files("libs/adbid_sdk_2.1.0_1127_1108.aar"))
+    implementation(files("libs/adbid_sdk_2.1.0_1127_1556.aar"))
     implementation(files("libs/adbid_csj_1.0.8_1127_1516.aar"))
     implementation(files("libs/adbid_gdt_1.0.8_1127_1101.aar"))
     implementation(files("libs/adbid_ks_1.0.8_1127_1102.aar"))
