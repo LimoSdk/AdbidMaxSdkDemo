@@ -1,7 +1,6 @@
 package com.yiman.ad.adbid.platform;
 
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.adbid.media.AdBidPlatform;
 import com.adbid.sdk.AdbidSdk;

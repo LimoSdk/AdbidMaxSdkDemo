@@ -7,11 +7,11 @@ android {
     buildToolsVersion rootProject.ext.android.buildToolsVersion
     namespace = "com.yiman.ad.adbid"
     defaultConfig {
-        applicationId "com.adbid.sdk.demo"
+        applicationId "com.adbid.max.sdk.demo"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 1
+        versionName "1.0.1"
     }
 
     signingConfigs {
@@ -54,21 +54,70 @@ repositories {
 
 dependencies {
     implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
     implementation(libs.glide)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.play.services.ads.identifier)
+    implementation(libs.play.services.location)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
 
 
-    //聚合接入
-    implementation("com.limo.sdk:adbid-sdk:2.1.0")
-    // 可选，联系技术是否需要接入
-    implementation("com.limo.sdk:adbid-ubix-adapter:1.0.1")
-    implementation("com.limo.sdk.ubix:ubix-sdk:2.8.0")
+    //微信小程序,建议接入，有利于提高收益
+    implementation("com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.8.0")
 
-    //如果初始化sdk时，未手动传入oaid,此处必须要引用，否则无法请求广告
+    // 选择性接入，如果手动向sdk传入OAID,则无需接入，如果不传入，必须添加此依赖，否则影响收益
     implementation("com.huawei.hms:ads-identifier:3.4.62.300")
     implementation("com.hihonor.mcs:ads-identifier:1.0.2.301")
+
+
+    //领摩核心库 及 各平台适配器
+    implementation(files("libs/adbid_sdk_2.1.0_1127_1108.aar"))
+    implementation(files("libs/adbid_csj_1.0.8_1127_1516.aar"))
+    implementation(files("libs/adbid_gdt_1.0.8_1127_1101.aar"))
+    implementation(files("libs/adbid_ks_1.0.8_1127_1102.aar"))
+    implementation(files("libs/adbid_huichuan_1.0.8_1127_1102.aar"))
+    implementation(files("libs/adbid_taKu_1.0.1_1127_1109.aar"))
+    implementation(files("libs/adbid_amps_1.0.1_1127_1056.aar"))
+    implementation(files("libs/adbid_ubix_1.0.2_1127_1109.aar"))
+
+
+    //快手
+    implementation(files("libs/kssdk-ad-4.6.30.1-publishRelease-4e360ba1fe.aar"))
+
+    //汇川
+    implementation(files("libs/noah-12.0.4002-120.aar"))
+
+    //广点通
+    implementation("com.qq.e.union:union:4.642.1512") // 普通版本
+
+    //优必客思
+    implementation("com.limo.sdk.ubix:ubix-sdk:2.8.0")
+
+    //TopOn
+    implementation(files("libs/anythink_adx_sdk_kuying_6.5.45_necessary.aar"))
+    implementation(files("libs/anythink_banner.aar"))
+    implementation(files("libs/anythink_china_core.aar"))
+    implementation(files("libs/anythink_core.aar"))
+    implementation(files("libs/anythink_interstitial.aar"))
+    implementation(files("libs/anythink_native.aar"))
+    implementation(files("libs/anythink_network_adx_kuying_sdk_necessary.aar"))
+    implementation(files("libs/anythink_network_csj_mix.aar"))
+    implementation(files("libs/anythink_network_mobrain_mix_plus.aar"))
+    implementation(files("libs/anythink_rewardvideo.aar"))
+    implementation(files("libs/anythink_splash.aar"))
+
+    //穿山甲
+    implementation(files("libs/open_ad_sdk.aar"))
+
+    //AdHub
+    implementation(files("libs/AMPSSDK-5.1.1.3.aar"))
+    implementation(files("libs/common_5.1.1.3.aar"))
+    implementation(files("libs/AMPSASNPAdapter-5.1.5305.0.aar"))
+    implementation(files("libs/ASNPSDK_5.3.0.5.aar"))
+    implementation(files("libs/AMPSBZAdapter-5.1.5220.0.aar"))
+    implementation(files("libs/beizi_fusion_sdk_5.2.2.0.aar"))
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+
 
 }

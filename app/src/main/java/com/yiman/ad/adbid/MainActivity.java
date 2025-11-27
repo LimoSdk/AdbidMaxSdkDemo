@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -22,16 +22,21 @@ import com.adbid.media.ad.AdbidBannerView;
 import com.adbid.media.ad.AdbidInterstitial;
 import com.adbid.media.ad.AdbidRewarded;
 import com.adbid.utils.ViewUtils;
+import com.kwad.components.ad.reward.n;
 import com.yiman.ad.adbid.ad.BannerActivity;
 import com.yiman.ad.adbid.ad.InterstitialActivity;
 import com.yiman.ad.adbid.ad.NativeAdActivity;
 import com.yiman.ad.adbid.ad.NativeAdRecycleActivity;
 import com.yiman.ad.adbid.ad.RewardActivity;
 import com.yiman.ad.adbid.ad.SplashActivity;
+import com.yiman.ad.adbid.platform.BottomSelectDialog;
+import com.yiman.ad.adbid.platform.ItemModel;
+import com.yiman.ad.adbid.platform.PlatformManager;
 import com.yiman.ad.adbid.view.TitleBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -42,16 +47,19 @@ public class MainActivity extends BaseActivity {
     @Nullable private AdbidListener appOpenAdListener;
     @Nullable private AdbidRewardListener adbidRewardListener;
     @Nullable private AdbidListener interListener;
-
+    private TextView textPlatform;
+    private static final String TAG = "MainActivity";
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         TitleBar titleBar = findViewById(R.id.title_bar);
         titleBar.setTitle(R.string.app_name);
+        textPlatform = findViewById(R.id.text_platform);
         titleBar.setListener(view -> finish());
+        textPlatform.setText(PlatformManager.getString());
         initAd();
+
     }
 
     private void initAd() {
@@ -59,6 +67,12 @@ public class MainActivity extends BaseActivity {
         initReward();
         initInter();
         initBanner();
+
+        findViewById(R.id.btn_change).setOnClickListener(
+                view -> new BottomSelectDialog(MainActivity.this,
+                        () -> {
+                            textPlatform.setText(PlatformManager.getString());
+                        }).show());
 
         findViewById(R.id.btn_native_load).setOnClickListener(
                 view -> startActivity(new Intent(MainActivity.this, NativeAdActivity.class)));
@@ -88,6 +102,8 @@ public class MainActivity extends BaseActivity {
             int width = getResources().getDisplayMetrics().widthPixels;//定一个宽度值，比如屏幕宽度
             int height = (int) (width / (320 / 50f));//按照比例转换高度的值
             bannerView.setAdSize(width, height);
+            bannerView.setLayoutParams(
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
             bannerView.setBannerAdListener(new AdbidBannerListener() {
                 @Override public void onBannerLoad(@NonNull AdbidAdInfo adInfo) {
                     logToast("onBannerLoad");
@@ -99,7 +115,7 @@ public class MainActivity extends BaseActivity {
                 }
 
                 @Override public void onBannerShow(@NonNull AdbidAdInfo adInfo) {
-                    logToast("onBannerShow");
+                    logToast("onBannerShow ecpm " + adInfo.getPrice());
                 }
 
                 @Override public void onBannerClose(@NonNull AdbidAdInfo adInfo) {
@@ -113,7 +129,6 @@ public class MainActivity extends BaseActivity {
             });
             viewGroup.removeAllViews();
             viewGroup.addView(bannerView);
-
             bannerView.loadAd();
         });
     }
@@ -126,7 +141,7 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override public void onAdLoad(@NonNull AdbidAdInfo adInfo) {
-                logToast("onAdLoadSuccess");
+                logToast("onAdLoadSuccess  ecpm " + adInfo.getPrice());
             }
 
             @Override
@@ -154,22 +169,23 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_reward_Load).setOnClickListener(view -> {
             rewardedAd = new AdbidRewarded(AdConfig.getAdConfig().getRewardUnitId());
             rewardedAd.setAdListener(adbidRewardListener);
-            Map<String,Object> extra=new HashMap<>();
-            extra.put("testId",189978878);
-            extra.put("testUserName","zhangSan");
-            extra.put("testAdInfo",new ArrayList<>());
+            Map<String, Object> extra = new HashMap<>();
+            extra.put("testId", 189978878);
+            extra.put("testUserName", "zhangSan");
+            extra.put("testAdInfo", new ArrayList<>());
             rewardedAd.setLocalExtra(extra);
             rewardedAd.loadAd();
         });
         findViewById(R.id.btn_reward_show).setOnClickListener(view -> {
             if (rewardedAd != null) rewardedAd.showAd();
         });
+
     }
 
     private void initInter() {
         interListener = new AdbidListener() {
             @Override public void onAdLoad(@NonNull AdbidAdInfo adInfo) {
-                logToast("onAdLoadSuccess");
+                logToast("onAdLoadSuccess ecpm " + adInfo.getPrice());
             }
 
             @Override
@@ -212,7 +228,8 @@ public class MainActivity extends BaseActivity {
     private void initSplash() {
         appOpenAdListener = new AdbidListener() {
             @Override public void onAdLoad(@NonNull AdbidAdInfo adInfo) {
-                logToast("onAdLoadSuccess");
+                logToast("onAdLoadSuccess ecpm " + adInfo.getPrice());
+                appOpenAd.winNotice(12);
             }
 
             @Override
@@ -248,6 +265,7 @@ public class MainActivity extends BaseActivity {
             appOpenAd = new AdbidAppOpen(AdConfig.getAdConfig().getSplashUnitId());
             appOpenAd.setAdListener(appOpenAdListener);
             appOpenAd.loadAd();
+
         });
         findViewById(R.id.btn_app_open_show).setOnClickListener(view -> {
             if (appOpenAd != null) appOpenAd.showAd(findViewById(R.id.frame_ad));

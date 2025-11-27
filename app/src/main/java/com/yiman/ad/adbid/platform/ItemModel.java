@@ -1,7 +1,5 @@
 package com.yiman.ad.adbid.platform;
 
-import com.adbid.media.AdBidPlatform;
-
 public class ItemModel {
     private String name;
     private boolean isSelected;

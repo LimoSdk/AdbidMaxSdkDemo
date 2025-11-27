@@ -12,6 +12,7 @@ import com.adbid.sdk.AdbidCustomController;
 import com.adbid.sdk.AdbidInitConfig;
 import com.adbid.sdk.AdbidLocation;
 import com.adbid.sdk.AdbidSdk;
+import com.yiman.ad.adbid.platform.PlatformManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +21,10 @@ import java.util.List;
 public class MyApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
+        //无需接入
+        PlatformManager.init();
 
+        //广告sdk初始化
         AdbidInitConfig config = AdbidInitConfig
                 .builder(AdConfig.getAdConfig().getAppId())
                 //设置App渠道

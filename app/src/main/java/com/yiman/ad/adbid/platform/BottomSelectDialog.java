@@ -15,10 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.adbid.sdk.AdbidSdkConfiguration;
 import com.yiman.ad.adbid.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BottomSelectDialog extends Dialog {
